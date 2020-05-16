@@ -43,9 +43,6 @@ struct SYM
 template<typename T>
 TPQueue<T>::~TPQueue()
 {
-	char ch;
-	int  prior;
-}; 
     while (head)
         pop();
 }
@@ -120,6 +117,9 @@ T TPQueue<T>::pop()
 template<typename T>
 void TPQueue<T>::print() const
 {
+	char ch;
+	int  prior;
+}; 
     ITEM* temp = head;
     while (temp)
     {
