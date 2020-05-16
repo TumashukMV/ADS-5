@@ -1,5 +1,3 @@
-#include <cassert>
-
 template<typename T>
 class TPQueue
 {
@@ -8,6 +6,7 @@ class TPQueue
     {
         T data;
         ITEM* next;
+
     };
 public:
     TPQueue() :head(nullptr), tail(nullptr) {}
@@ -18,15 +17,16 @@ public:
 private:
     TPQueue::ITEM* create(const T&);
     ITEM* head;
-    ITEM* u;
     ITEM* tail;
 };
+
 template<typename T>
 typename TPQueue<T>::ITEM* TPQueue<T>::create(const T& data)
 {
     ITEM* item = new ITEM;
     item->data = data;
     item->next = nullptr;
+
     return item;
 }
 template<typename T>
@@ -36,78 +36,35 @@ TPQueue<T>::~TPQueue()
         pop();
 }
 template<typename T>
-void TPQueue<T>::push(const T& inf)
+void TPQueue<T>::push(const T& data)
 {
-    if (head == nullptr)
-    {
-        head = create(inf);
-        u = head;
-        tail = head;
-    }
-    else if (tail->data.prior >= inf.prior)
-    {
 
-        if (tail->data.prior == inf.prior && tail->data.ch == inf.ch)
+        if (tail && head)
         {
-
-            tail->data = inf;
+            ITEM* begin = head;
+            ITEM* newItem = create(data);
+            if ((head->data).prior < data.prior) {
+                newItem->next = head;
+                head = newItem;
+           }
+            else {
+                while (begin->next != nullptr && (begin->next->data.prior < data.prior)) {
+                    begin = begin->next;
+                }
+                newItem->next = begin->next;
+                begin->next = newItem;
+            }
 
         }
+
         else
         {
-            if (tail->data.prior >= inf.prior && tail->data.ch != inf.ch)
-            {
-                tail->next = create(inf);
-                tail = tail->next;
-            }
+            head = create(data);
+            head->next = tail;
+            tail = head;
         }
-    }
-    else
-    {
 
-        if (tail->data.prior < inf.prior)
-        {
-            if (inf.prior > head->data.prior)
-            {
-                ITEM* tmp = NULL;
-                tmp = create(inf);
-                tmp->next = head;
-                head = tmp;
-            }
-            else
-
-                if (inf.prior == head->data.prior)
-
-                    if (inf.ch == head->data.ch)
-                        head->data = inf;
-                    else
-                    {
-                        ITEM* u = nullptr;
-                        u = create(inf);
-                        u->next = head->next;
-                        head->next = u;
-
-                    }
-
-                else
-                {
-                    if (inf.prior < head->data.prior)
-                    {
-                        ITEM* u = nullptr;
-                        u = create(inf);
-                        u->next = head->next;
-                        head->next = u;
-                    }
-                }
-
-
-
-
-
-        }
-    }
 }
-
 template<typename T>
 T TPQueue<T>::pop()
 {
@@ -119,30 +76,29 @@ T TPQueue<T>::pop()
         head = temp;
         return data;
     }
-
-}
-template<typename T>
-void TPQueue<T>::print() const	
-{
+    else
     {
-        ITEM* temp = head;	    
-        while (temp)	 
-        {
-            {
-                std::cout << temp->data << " ";	        
-                temp = temp->next;	       
-            }
-        }
-        std::cout << std::endl;	    std::cout << std::endl;
+
+        T data;  data.ch = '0';  data.prior = '0';
+        return data;
     }
 }
+template<typename T>
+void TPQueue<T>::print() const
+{
+    ITEM* temp = head;
+    while (temp)
+    {
+        std::cout << temp->data << " ";
+        temp = temp->next;
+    }
+    std::cout << std::endl;
+}
+
 
 struct SYM
 {
 	char ch;
 	int  prior;
 }; 
-    char ch;
-    int prior;
-    SYM* next;
-}; 
+};
