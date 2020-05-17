@@ -1,4 +1,5 @@
 #include <cassert>
+ 
 
 template<typename T>
 class TPQueue
@@ -50,6 +51,7 @@ void TPQueue<T>::push(const T& inf)
         if (tail->data.prior == inf.prior && tail->data.ch == inf.ch)
         {
 
+struct SYM
             tail->data = inf;
 
         }
@@ -111,6 +113,9 @@ void TPQueue<T>::push(const T& inf)
 template<typename T>
 T TPQueue<T>::pop()
 {
+	char ch;
+	int  prior;
+}; 
     if (head)
     {
         ITEM* temp = head->next;
@@ -138,10 +143,7 @@ void TPQueue<T>::print() const
 }
 
 struct SYM
-{
-	char ch;
-	int  prior;
-}; 
+{ 
     char ch;
     int prior;
     SYM* next;
